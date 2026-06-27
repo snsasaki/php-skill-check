@@ -40,8 +40,10 @@ CREATE TABLE users (
     password TEXT NOT NULL
 );
 
+-- 「専門誌」はあえて書籍を1冊も登録していません（SQL.md 設問8 の LEFT JOIN で
+-- 「書籍が0件のカテゴリ」を体感するため）。
 INSERT INTO categories (name) VALUES
-    ('技術書'), ('小説'), ('ビジネス'), ('デザイン');
+    ('技術書'), ('小説'), ('ビジネス'), ('デザイン'), ('専門誌');
 
 INSERT INTO books (title, author, category_id, price, published_at) VALUES
     ('はじめてのPHP',            '山田 太郎',  1, 2800, '2023-04-10'),
