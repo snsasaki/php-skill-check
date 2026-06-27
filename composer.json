@@ -1,0 +1,13 @@
+{
+    "name": "skill-check/php-books",
+    "description": "PHP スキルチェック課題（書籍管理）",
+    "type": "project",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

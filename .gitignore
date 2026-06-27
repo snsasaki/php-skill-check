@@ -1,0 +1,4 @@
+/vendor/
+/database/app.sqlite
+.DS_Store
+*.log
