@@ -17,10 +17,12 @@
 
 require __DIR__ . '/../bootstrap.php';
 
+use App\Controllers\AuthController;
 use App\Controllers\BookController;
 
 $page = $_GET['page'] ?? 'index';
 $controller = new BookController();
+$authController = new AuthController();
 
 switch ($page) {
     case 'index':
@@ -42,6 +44,21 @@ switch ($page) {
         break;
     case 'delete':
         $controller->delete();
+        break;
+    case 'showlogin':
+        $authController->showLogin();
+        break;
+    case 'login':
+        $authController->login();
+        break;
+    case 'showregister':
+        $authController->showRegister();
+        break;
+    case 'register':
+        $authController->register();
+        break;
+    case 'logout':
+        $authController->logout();
         break;
     // ▲▲▲ ここまで ▲▲▲
 
