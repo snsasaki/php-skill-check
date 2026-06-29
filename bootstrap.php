@@ -1,5 +1,9 @@
 <?php
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 /**
  * 簡易オートローダ（PSR-4 相当）と共通読み込み。
  * App\Foo\Bar  ->  src/Foo/Bar.php に対応させる。
