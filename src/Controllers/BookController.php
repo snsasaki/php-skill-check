@@ -28,7 +28,6 @@ class BookController
     {
         $categories = Category::all();
         view('books/create', ['categories' => $categories, 'errors' => [], 'old' => []]);
-        // view('books/create'); // 仮表示（実装前の白画面防止。実装時に上記へ置き換える）
     }
 
     /**
@@ -84,24 +83,18 @@ class BookController
 
         header('Location: /?page=index&created=1');
         exit;
-
-        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // }
     }
 
     /** ★応用課題: 編集フォームの表示（?page=edit&id=...） */
     public function edit(): void
     {
-        // TODO: ここを実装する（下の仮表示を本実装に置き換える）
         $book = Book::find($_GET['id'] ?? null);
         view('books/edit', ['book' => $book, 'categories' => Category::all(), 'errors' => []]);
-        // view('books/edit'); // 仮表示（実装前の白画面防止。実装時に上記へ置き換える）
     }
 
     /** ★応用課題: 更新処理（POST） */
     public function update(): void
     {
-        // TODO: ここを実装する
         $id = $_POST['id'] ?? '';
 
         $old = [
@@ -153,7 +146,6 @@ class BookController
     /** ★応用課題: 削除処理 */
     public function delete(): void
     {
-        // TODO: ここを実装する
         $id = $_POST['id'] ?? '';
 
         Book::delete((int)$id);
