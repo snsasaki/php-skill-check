@@ -28,7 +28,6 @@ class BookController
     {
         $categories = Category::all();
         view('books/create', ['categories' => $categories, 'errors' => [], 'old' => []]);
-        // view('books/create'); // 仮表示（実装前の白画面防止。実装時に上記へ置き換える）
     }
 
     /**
@@ -84,29 +83,73 @@ class BookController
 
         header('Location: /?page=index&created=1');
         exit;
-
-        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // }
     }
 
     /** ★応用課題: 編集フォームの表示（?page=edit&id=...） */
     public function edit(): void
     {
-        // TODO: ここを実装する（下の仮表示を本実装に置き換える）
-        //   $book = Book::find($_GET['id'] ?? null);
-        //   view('books/edit', ['book' => $book, 'categories' => Category::all(), 'errors' => []]);
-        view('books/edit'); // 仮表示（実装前の白画面防止。実装時に上記へ置き換える）
+        $book = Book::find($_GET['id'] ?? null);
+        view('books/edit', ['book' => $book, 'categories' => Category::all(), 'errors' => []]);
     }
 
     /** ★応用課題: 更新処理（POST） */
     public function update(): void
     {
-        // TODO: ここを実装する
+        $id = $_POST['id'] ?? '';
+
+        $old = [
+            'id' => (int)$id,
+            'title' => trim($_POST['title'] ?? ''),
+            'author' => trim($_POST['author'] ?? ''),
+            'category_id'  => trim($_POST['category_id'] ?? ''),
+            'price'  => trim($_POST['price'] ?? ''),
+        ];
+
+        $errors = [];
+
+        //バリデーション
+        if ($old['title'] === '') {
+            $errors['title'] = 'タイトルは必須です。';
+        } elseif (mb_strlen($old['title']) > 100) {
+            $errors['title'] = 'タイトルは100文字以内で入力してください。';
+        }
+
+        if ($old['author'] === '') {
+            $errors['author'] = '著者は必須です。';
+        }
+
+        if ($old['category_id'] === '') {
+            $errors['category_id'] = 'カテゴリは必須です。';
+        }
+
+        if ($old['price'] === '') {
+            $errors['price'] = '価格は必須です。';
+        } elseif (!is_numeric($old['price']) || (int)$old['price'] < 0) {
+            $errors['price'] = '価格は0以上の数値で入力してください。';
+        }
+
+        if ($errors) {
+            view('books/edit', [
+                'categories' => Category::all(),
+                'errors' => $errors,
+                'book' => $old,
+            ]);
+            return;
+        }
+
+        Book::update($id, $old);
+
+        header('Location: /?page=index&updated=1');
+        exit;
     }
 
     /** ★応用課題: 削除処理 */
     public function delete(): void
     {
-        // TODO: ここを実装する
+        $id = $_POST['id'] ?? '';
+
+        Book::delete((int)$id);
+        header('Location: /?page=index&deleted=1');
+        exit;
     }
 }

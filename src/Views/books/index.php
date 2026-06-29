@@ -1,8 +1,14 @@
-<?php /** @var array $books */ ?>
+<?php
+
+/** @var array $books */ ?>
 <?php $title = '書籍一覧'; ?>
 
 <?php if (!empty($_GET['created'])): ?>
   <p class="flash">書籍を登録しました。</p>
+<?php endif; ?>
+
+<?php if (!empty($_GET['deleted'])): ?>
+  <p class="flash">書籍を削除しました。</p>
 <?php endif; ?>
 
 <h2>書籍一覧（<?= count($books) ?> 件）</h2>
@@ -10,7 +16,12 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th><th>タイトル</th><th>著者</th><th>カテゴリ</th><th>価格</th><th>操作</th>
+      <th>ID</th>
+      <th>タイトル</th>
+      <th>著者</th>
+      <th>カテゴリ</th>
+      <th>価格</th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody>
@@ -22,19 +33,16 @@
         <td><?= e($book['category_name']) ?></td>
         <td>¥<?= number_format((int) $book['price']) ?></td>
         <td>
-          <!--
-            ★応用課題: 編集・削除を実装したら、下記を有効化してください。
-            （edit()/update()/delete() を実装する前に置くと操作後に白画面になるため、
-              最初はコメントアウトしています。実装後にこのコメントを外して使ってください）
+          <!-- ★応用課題: -->
+          <a class="btn" href="/?page=edit&id=<?= e($book['id']) ?>">編集</a>
 
-            <a class="btn" href="/?page=edit&id=（ここに書籍のid）">編集</a>
-            <form method="post" action="/?page=delete" style="display:inline"
-                  onsubmit="return confirm('削除しますか？');">
-              <input type="hidden" name="id" value="（ここに書籍のid）">
-              <button type="submit">削除</button>
-            </form>
-          -->
-          <span class="muted">—</span>
+          <form method="post" action="/?page=delete" style="display:inline"
+            onsubmit="return confirm('削除しますか？');">
+            <input type="hidden" name="id" value="<?= e($book['id']) ?>">
+            <button type="submit">削除</button>
+          </form>
+
+          <!-- <span class="muted">—</span> -->
         </td>
       </tr>
     <?php endforeach; ?>
