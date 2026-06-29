@@ -44,12 +44,42 @@ class AuthController
 
   public function showRegister(): void
   {
-    // TODO
+    view('auth/register', ['error' => '', 'old' => []]);
   }
 
   public function register(): void
   {
-    // TODO
+    $old = [
+      'name' => trim($_POST['name'] ?? ''),
+      'email' => trim($_POST['email'] ?? ''),
+    ];
+
+    $password = $_POST['password'] ?? '';
+
+    if ($old['name'] === '' || $old['email'] === '' || $password === '') {
+      view('auth/register', [
+        'error' => '名前、メールアドレス、パスワードを入力してください。',
+        'old' => $old,
+      ]);
+      return;
+    }
+
+    if (User::findByEmail($old['email']) !== null) {
+      view('auth/register', [
+        'error' => 'このメールアドレスはすでに登録されています。',
+        'old' => $old,
+      ]);
+      return;
+    }
+
+    User::create([
+      'name' => $old['name'],
+      'email' => $old['email'],
+      'password' => $password,
+    ]);
+
+    header('Location: /?page=showlogin');
+    exit;
   }
 
   public function logout(): void
