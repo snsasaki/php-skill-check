@@ -11,6 +11,15 @@ use App\Models\Category;
  */
 class BookController
 {
+    // セッションにuserIDがあるかで認可処理
+    private function requireLogin(): void
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /?page=showlogin');
+            exit;
+        }
+    }
+
     /** 一覧表示（実装済みの見本） */
     public function index(): void
     {
@@ -26,6 +35,8 @@ class BookController
      */
     public function create(): void
     {
+        $this->requireLogin();
+
         $categories = Category::all();
         view('books/create', ['categories' => $categories, 'errors' => [], 'old' => []]);
     }
@@ -40,6 +51,8 @@ class BookController
      */
     public function store(): void
     {
+        $this->requireLogin();
+
         $old = [
             'title' => trim($_POST['title'] ?? ''),
             'author' => trim($_POST['author'] ?? ''),
@@ -88,6 +101,8 @@ class BookController
     /** ★応用課題: 編集フォームの表示（?page=edit&id=...） */
     public function edit(): void
     {
+        $this->requireLogin();
+
         $book = Book::find($_GET['id'] ?? null);
         view('books/edit', ['book' => $book, 'categories' => Category::all(), 'errors' => []]);
     }
@@ -95,6 +110,8 @@ class BookController
     /** ★応用課題: 更新処理（POST） */
     public function update(): void
     {
+        $this->requireLogin();
+
         $id = $_POST['id'] ?? '';
 
         $old = [
@@ -146,6 +163,8 @@ class BookController
     /** ★応用課題: 削除処理 */
     public function delete(): void
     {
+        $this->requireLogin();
+
         $id = $_POST['id'] ?? '';
 
         Book::delete((int)$id);
