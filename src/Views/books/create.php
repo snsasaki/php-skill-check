@@ -18,7 +18,7 @@
 $title = '新規登録';
 ?>
 
-<h2>新規書籍登録（このページを実装してください）</h2>
+<h2>新規書籍登録</h2>
 
 <form method="post" action="/?page=store">
   <tr>

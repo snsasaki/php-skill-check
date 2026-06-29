@@ -16,7 +16,7 @@
 $title = '編集';
 ?>
 
-<h2>書籍の編集（このページを実装してください）</h2>
+<h2>書籍の編集</h2>
 
 <form method="post" action="/?page=update">
 
