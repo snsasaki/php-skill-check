@@ -80,7 +80,7 @@
     <h1><a href="/" style="text-decoration:none;color:inherit;">📚 書籍管理</a></h1>
     <nav>
       <a class="btn btn-primary" href="/?page=create">+ 新規登録</a>
-      <a class="btn btn-primary" href="/?page=showLogin">ログイン</a>
+      <a class="btn btn-primary" href="/?page=showlogin">ログイン</a>
     </nav>
   </header>
   <main>
