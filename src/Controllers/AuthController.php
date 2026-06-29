@@ -84,6 +84,11 @@ class AuthController
 
   public function logout(): void
   {
-    // TODO
+    $_SESSION = [];
+
+    session_destroy();
+
+    header('Location: /?page=showlogin');
+    exit;
   }
 }
