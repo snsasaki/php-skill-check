@@ -41,7 +41,52 @@ class BookController
      */
     public function store(): void
     {
-        // TODO: ここを実装する
+        $request = [
+            'title' => trim($_POST['title'] ?? ''),
+            'author' => trim($_POST['author'] ?? ''),
+            'category_id'  => trim($_POST['category_id'] ?? ''),
+            'price'  => trim($_POST['price'] ?? ''),
+        ];
+
+        $errors = [];
+
+        //バリデーション
+        if ($request['title'] === '') {
+            $errors['title'] = 'タイトルは必須です。';
+        } elseif (mb_strlen($request['title']) > 100) {
+            $errors['title'] = 'タイトルは100文字以内で入力してください。';
+        }
+
+        if ($request['author'] === '') {
+            $errors['author'] = '著者は必須です。';
+        }
+
+        if ($request['category_id'] === '') {
+            $errors['category_id'] = 'カテゴリは必須です。';
+        }
+
+        if ($request['price'] === '') {
+            $errors['price'] = '価格は必須です。';
+        } elseif (!is_numeric($request['price']) || (int)$request['price'] < 0) {
+            $errors['price'] = '価格は0以上の数値で入力してください。';
+        }
+
+        if ($errors) {
+            view('book/create', [
+                'categories' => Category::all(),
+                'errors' => $errors,
+                'old' => $request,
+            ]);
+            return;
+        }
+
+        Book::create($request);
+
+        header('Location: /?page=index&created=1');
+        exit;
+
+        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // }
     }
 
     /** ★応用課題: 編集フォームの表示（?page=edit&id=...） */
