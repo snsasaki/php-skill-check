@@ -40,6 +40,17 @@ class Book
     public static function create(array $data): void
     {
         // TODO: ここを実装する
+        $sql = 'INSERT INTO books (title, author, category_id, price, published_at)
+            VALUES (?, ?, ?, ?, ?)';
+
+        $stmt = db()->prepare($sql);
+        $stmt->execute([
+            $data['title'],
+            $data['author'],
+            $data['category_id'],
+            $data['price'],
+            null,
+        ]);
     }
 
     /**

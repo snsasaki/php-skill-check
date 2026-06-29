@@ -26,10 +26,9 @@ class BookController
      */
     public function create(): void
     {
-        // TODO: ここを実装する（下の仮表示を本実装に置き換える）
-        //   $categories = Category::all();
-        //   view('books/create', ['categories' => $categories, 'errors' => [], 'old' => []]);
-        view('books/create'); // 仮表示（実装前の白画面防止。実装時に上記へ置き換える）
+        $categories = Category::all();
+        view('books/create', ['categories' => $categories, 'errors' => [], 'old' => []]);
+        // view('books/create'); // 仮表示（実装前の白画面防止。実装時に上記へ置き換える）
     }
 
     /**
@@ -42,7 +41,52 @@ class BookController
      */
     public function store(): void
     {
-        // TODO: ここを実装する
+        $old = [
+            'title' => trim($_POST['title'] ?? ''),
+            'author' => trim($_POST['author'] ?? ''),
+            'category_id'  => trim($_POST['category_id'] ?? ''),
+            'price'  => trim($_POST['price'] ?? ''),
+        ];
+
+        $errors = [];
+
+        //バリデーション
+        if ($old['title'] === '') {
+            $errors['title'] = 'タイトルは必須です。';
+        } elseif (mb_strlen($old['title']) > 100) {
+            $errors['title'] = 'タイトルは100文字以内で入力してください。';
+        }
+
+        if ($old['author'] === '') {
+            $errors['author'] = '著者は必須です。';
+        }
+
+        if ($old['category_id'] === '') {
+            $errors['category_id'] = 'カテゴリは必須です。';
+        }
+
+        if ($old['price'] === '') {
+            $errors['price'] = '価格は必須です。';
+        } elseif (!is_numeric($old['price']) || (int)$old['price'] < 0) {
+            $errors['price'] = '価格は0以上の数値で入力してください。';
+        }
+
+        if ($errors) {
+            view('books/create', [
+                'categories' => Category::all(),
+                'errors' => $errors,
+                'old' => $old,
+            ]);
+            return;
+        }
+
+        Book::create($old);
+
+        header('Location: /?page=index&created=1');
+        exit;
+
+        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // }
     }
 
     /** ★応用課題: 編集フォームの表示（?page=edit&id=...） */
