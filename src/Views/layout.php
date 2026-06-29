@@ -79,8 +79,13 @@
   <header style="display:flex;justify-content:space-between;align-items:center;">
     <h1><a href="/" style="text-decoration:none;color:inherit;">📚 書籍管理</a></h1>
     <nav>
-      <a class="btn btn-primary" href="/?page=create">+ 新規登録</a>
-      <a class="btn btn-primary" href="/?page=showlogin">ログイン</a>
+      <?php if (isset($_SESSION['user_id'])): ?>
+        <a class="btn btn-primary" href="/?page=create">+ 書籍登録</a>
+        <a class="btn" href="/?page=logout">ログアウト</a>
+      <?php else: ?>
+        <a class="btn btn-primary" href="/?page=showlogin">ログイン</a>
+        <a class="btn" href="/?page=showregister">ユーザー登録</a>
+      <?php endif; ?>
     </nav>
   </header>
   <main>
