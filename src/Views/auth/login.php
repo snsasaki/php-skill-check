@@ -1,10 +1,18 @@
 <h2>ログイン</h2>
 
-<form method="POST" action="">
+<?php if (!empty($error)): ?>
+  <p class="error"><?= e($error) ?></p>
+<?php endif; ?>
 
+<form method="POST" action="/?page=login">
   <div>
     <label for="email">メールアドレス</label>
-    <input id="email" type="email" name="email" value="" placeholder="test@example.com">
+    <input
+      id="email"
+      type="email"
+      name="email"
+      value="<?= e($old['email'] ?? '') ?>"
+      placeholder="test@example.com">
   </div>
 
   <div>

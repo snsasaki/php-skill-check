@@ -1,11 +1,14 @@
 <h2>ユーザー新規作成</h2>
 
-<form method="POST" action="">
-  @csrf
+<form method="POST" action="/?page=register">
+  <div>
+    <label for="name">名前</label>
+    <input id="name" type="text" name="name" value="<?= e($old['name'] ?? '') ?>">
+  </div>
 
   <div>
     <label for="email">メールアドレス</label>
-    <input id="email" type="email" name="email" value="" placeholder="test@example.com">
+    <input id="email" type="email" name="email" value="<?= e($old['email'] ?? '') ?>" placeholder="test@example.com">
   </div>
 
   <div>
