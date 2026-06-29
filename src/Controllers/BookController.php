@@ -26,10 +26,9 @@ class BookController
      */
     public function create(): void
     {
-        // TODO: ここを実装する（下の仮表示を本実装に置き換える）
-        //   $categories = Category::all();
-        //   view('books/create', ['categories' => $categories, 'errors' => [], 'old' => []]);
-        view('books/create'); // 仮表示（実装前の白画面防止。実装時に上記へ置き換える）
+        $categories = Category::all();
+        view('books/create', ['categories' => $categories, 'errors' => [], 'old' => []]);
+        // view('books/create'); // 仮表示（実装前の白画面防止。実装時に上記へ置き換える）
     }
 
     /**

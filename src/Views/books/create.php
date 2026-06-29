@@ -26,15 +26,16 @@ $title = '新規登録';
   <td><input type="text" name="title" placeholder="タイトル"></td>
   <td><input type="text" name="author" placeholder="著者"></td>
   <td>
-    <select name="category_id" id="category_id">
-      <option value="技術書">技術書</option>
-      <option value="小説">小説</option>
-      <option value="ビジネス">ビジネス</option>
-      <option value="デザイン">デザイン</option>
-      <option value="専門誌">専門誌</option>
+    <select name="category">
+      <option value="" selected disabled>選択してください</option>
+      <?php foreach ($categories as $category): ?>
+        <option value="<?= htmlspecialchars($category['id']) ?>">
+          <?= htmlspecialchars($category['name']) ?>
+        </option>
+      <?php endforeach; ?>
     </select>
   </td>
-  <td><input type="text" name="price">価格</td>
+  <td><input type="text" name="price" placeholder="価格">></td>
 </form>
 
 <p><a class="btn" href="/">← 一覧へ戻る</a></p>
