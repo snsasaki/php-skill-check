@@ -64,6 +64,17 @@ class Book
     public static function update(int $id, array $data): void
     {
         // TODO: ここを実装する
+        $stmt = db()->prepare(
+            'UPDATE books SET title = ?, author = ?, category_id = ?, price = ? WHERE id = ?'
+        );
+
+        $stmt->execute([
+            $data['title'],
+            $data['author'],
+            $data['category_id'],
+            $data['price'],
+            $id,
+        ]);
     }
 
     /**
