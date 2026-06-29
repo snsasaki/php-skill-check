@@ -29,7 +29,6 @@ class Book
      */
     public static function find(int $id): ?array
     {
-        // TODO: ここを実装する
         $stmt = db()->prepare('SELECT * FROM books WHERE id = ?');
         $stmt->execute([$id]);
         $book = $stmt->fetch();
@@ -43,7 +42,6 @@ class Book
      */
     public static function create(array $data): void
     {
-        // TODO: ここを実装する
         $sql = 'INSERT INTO books (title, author, category_id, price, published_at)
             VALUES (?, ?, ?, ?, ?)';
 
@@ -63,7 +61,6 @@ class Book
      */
     public static function update(int $id, array $data): void
     {
-        // TODO: ここを実装する
         $stmt = db()->prepare(
             'UPDATE books SET title = ?, author = ?, category_id = ?, price = ? WHERE id = ?'
         );
@@ -83,7 +80,6 @@ class Book
      */
     public static function delete(int $id): void
     {
-        // TODO: ここを実装する
         $stmt = db()->prepare('DELETE FROM books WHERE id = ?');
         $stmt->execute([$id]);
     }
