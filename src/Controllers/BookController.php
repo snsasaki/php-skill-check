@@ -102,6 +102,52 @@ class BookController
     public function update(): void
     {
         // TODO: ここを実装する
+        $id = $_POST['id'] ?? '';
+
+        $old = [
+            'id' => (int)$id,
+            'title' => trim($_POST['title'] ?? ''),
+            'author' => trim($_POST['author'] ?? ''),
+            'category_id'  => trim($_POST['category_id'] ?? ''),
+            'price'  => trim($_POST['price'] ?? ''),
+        ];
+
+        $errors = [];
+
+        //バリデーション
+        if ($old['title'] === '') {
+            $errors['title'] = 'タイトルは必須です。';
+        } elseif (mb_strlen($old['title']) > 100) {
+            $errors['title'] = 'タイトルは100文字以内で入力してください。';
+        }
+
+        if ($old['author'] === '') {
+            $errors['author'] = '著者は必須です。';
+        }
+
+        if ($old['category_id'] === '') {
+            $errors['category_id'] = 'カテゴリは必須です。';
+        }
+
+        if ($old['price'] === '') {
+            $errors['price'] = '価格は必須です。';
+        } elseif (!is_numeric($old['price']) || (int)$old['price'] < 0) {
+            $errors['price'] = '価格は0以上の数値で入力してください。';
+        }
+
+        if ($errors) {
+            view('books/edit', [
+                'categories' => Category::all(),
+                'errors' => $errors,
+                'book' => $old,
+            ]);
+            return;
+        }
+
+        Book::update($id, $old);
+
+        header('Location: /?page=index&updated=1');
+        exit;
     }
 
     /** ★応用課題: 削除処理 */
