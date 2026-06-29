@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Book;
 use App\Models\Category;
+use App\Validators\BookValidator;
 
 /**
  * 書籍コントローラ。リクエストを受けて Model を呼び、View を描画します。
@@ -60,28 +61,7 @@ class BookController
             'price'  => trim($_POST['price'] ?? ''),
         ];
 
-        $errors = [];
-
-        //バリデーション
-        if ($old['title'] === '') {
-            $errors['title'] = 'タイトルは必須です。';
-        } elseif (mb_strlen($old['title']) > 100) {
-            $errors['title'] = 'タイトルは100文字以内で入力してください。';
-        }
-
-        if ($old['author'] === '') {
-            $errors['author'] = '著者は必須です。';
-        }
-
-        if ($old['category_id'] === '') {
-            $errors['category_id'] = 'カテゴリは必須です。';
-        }
-
-        if ($old['price'] === '') {
-            $errors['price'] = '価格は必須です。';
-        } elseif (!is_numeric($old['price']) || (int)$old['price'] < 0) {
-            $errors['price'] = '価格は0以上の数値で入力してください。';
-        }
+        $errors = (new BookValidator())->validate($old);
 
         if ($errors) {
             view('books/create', [
@@ -122,28 +102,7 @@ class BookController
             'price'  => trim($_POST['price'] ?? ''),
         ];
 
-        $errors = [];
-
-        //バリデーション
-        if ($old['title'] === '') {
-            $errors['title'] = 'タイトルは必須です。';
-        } elseif (mb_strlen($old['title']) > 100) {
-            $errors['title'] = 'タイトルは100文字以内で入力してください。';
-        }
-
-        if ($old['author'] === '') {
-            $errors['author'] = '著者は必須です。';
-        }
-
-        if ($old['category_id'] === '') {
-            $errors['category_id'] = 'カテゴリは必須です。';
-        }
-
-        if ($old['price'] === '') {
-            $errors['price'] = '価格は必須です。';
-        } elseif (!is_numeric($old['price']) || (int)$old['price'] < 0) {
-            $errors['price'] = '価格は0以上の数値で入力してください。';
-        }
+        $errors = (new BookValidator())->validate($old);
 
         if ($errors) {
             view('books/edit', [
