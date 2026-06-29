@@ -1,11 +1,10 @@
 <h2>ログイン</h2>
 
 <form method="POST" action="">
-  @csrf
 
   <div>
     <label for="email">メールアドレス</label>
-    <input id="email" type="email" name="email" value="{{ old('email') }}">
+    <input id="email" type="email" name="email" value="" placeholder="test@example.com">
   </div>
 
   <div>
