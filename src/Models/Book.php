@@ -30,7 +30,11 @@ class Book
     public static function find(int $id): ?array
     {
         // TODO: ここを実装する
-        return null;
+        $stmt = db()->prepare('SELECT * FROM books WHERE id = ?');
+        $stmt->execute([$id]);
+        $book = $stmt->fetch();
+
+        return $book ?: null;
     }
 
     /**
