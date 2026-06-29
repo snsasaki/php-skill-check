@@ -2,8 +2,6 @@
 
 namespace App\Validators;
 
-use App\Validator\Validator;
-
 class NumericValidator implements Validator
 {
   public function __construct(

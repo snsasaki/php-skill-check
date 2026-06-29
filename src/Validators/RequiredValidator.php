@@ -2,8 +2,6 @@
 
 namespace App\Validators;
 
-use App\Validator\Validator;
-
 class RequiredValidator implements Validator
 {
   public function __construct(

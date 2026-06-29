@@ -2,8 +2,6 @@
 
 namespace App\Validators;
 
-use App\Validator\Validator;
-
 class BookValidator implements Validator
 {
   private array $validators;

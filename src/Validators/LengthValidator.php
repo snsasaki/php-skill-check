@@ -2,8 +2,6 @@
 
 namespace App\Validators;
 
-use App\Validator\Validator;
-
 class LengthValidator implements Validator
 {
   public function __construct(
