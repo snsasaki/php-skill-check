@@ -7,6 +7,10 @@
   <p class="flash">書籍を登録しました。</p>
 <?php endif; ?>
 
+<?php if (!empty($_GET['deleted'])): ?>
+  <p class="flash">書籍を削除しました。</p>
+<?php endif; ?>
+
 <h2>書籍一覧（<?= count($books) ?> 件）</h2>
 
 <table>
@@ -35,13 +39,14 @@
               最初はコメントアウトしています。実装後にこのコメントを外して使ってください） -->
 
           <a class="btn" href="/?page=edit&id=<?= e($book['id']) ?>">編集</a>
-          <!-- <form method="post" action="/?page=delete" style="display:inline"
-            onsubmit="return confirm('削除しますか？');">
-            <input type="hidden" name="id" value="（ここに書籍のid）">
-            <button type="submit">削除</button>
-          </form> -->
 
-          <span class="muted">—</span>
+          <form method="post" action="/?page=delete" style="display:inline"
+            onsubmit="return confirm('削除しますか？');">
+            <input type="hidden" name="id" value="<?= e($book['id']) ?>">
+            <button type="submit">削除</button>
+          </form>
+
+          <!-- <span class="muted">—</span> -->
         </td>
       </tr>
     <?php endforeach; ?>

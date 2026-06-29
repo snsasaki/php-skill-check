@@ -154,5 +154,10 @@ class BookController
     public function delete(): void
     {
         // TODO: ここを実装する
+        $id = $_POST['id'] ?? '';
+
+        Book::delete((int)$id);
+        header('Location: /?page=index&deleted=1');
+        exit;
     }
 }
